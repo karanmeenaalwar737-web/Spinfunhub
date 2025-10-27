@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SpinFun Hub</title>
+  <style>
+    body { font-family: Arial, sans-serif; margin: 0; background: linear-gradient(135deg, #7f00ff, #e100ff); color: white; }
+    header { background: rgba(0,0,0,0.3); padding: 1em; text-align: center; font-size: 1.5em; font-weight: bold; }
+    nav a { color: white; margin: 0 10px; text-decoration: none; font-weight: bold; }
+    .content { padding: 20px; text-align: center; }
+    .wheel { margin: 50px auto; width: 200px; height: 200px; border-radius: 50%; background: conic-gradient(#ff9a9e, #fad0c4, #fbc2eb, #a6c1ee, #ff9a9e); position: relative; transition: transform 3s ease-out; }
+    .pointer { width: 0; height: 0; border-left: 15px solid transparent; border-right: 15px solid transparent; border-bottom: 25px solid yellow; margin: 0 auto; }
+    button { background: #ff4081; border: none; color: white; padding: 10px 20px; border-radius: 8px; font-size: 1em; cursor: pointer; transition: 0.3s; }
+    button:hover { background: #e73370; }
+    footer { text-align: center; padding: 1em; background: rgba(0,0,0,0.2); position: fixed; bottom: 0; width: 100%; }
+  </style>
+</head>
+<body>
+  <header>SpinFun Hub</header>
+  <nav>
+    <a href="index.html">Home</a>
+    <a href="about.html">About Us</a>
+    <a href="privacy.html">Privacy Policy</a>
+    <a href="contact.html">Contact</a>
+  </nav>
+  <div class="content">
+    <div class="pointer"></div>
+    <div class="wheel" id="wheel"></div>
+    <p id="result">Tap SPIN to try your luck!</p>
+    <button onclick="spinWheel()">SPIN</button>
+    <p>Coins: <span id="coins">0</span></p>
+  </div>
+  <footer>© 2025 SpinFun Hub</footer>
+  <script>
+    let coins = parseInt(localStorage.getItem('coins')) || 0;
+    document.getElementById('coins').textContent = coins;
+    function spinWheel() {
+      const wheel = document.getElementById('wheel');
+      const result = document.getElementById('result');
+      const randomDeg = Math.floor(3600 + Math.random() * 360);
+      wheel.style.transform = `rotate(${randomDeg}deg)`;
+      setTimeout(() => {
+        const reward = [5,10,15,20,0][Math.floor(Math.random()*5)];
+        coins += reward;
+        localStorage.setItem('coins', coins);
+        document.getElementById('coins').textContent = coins;
+        result.textContent = reward > 0 ? `You won ${reward} coins!` : "Better luck next time!";
+      }, 3000);
+    }
+  </script>
+  <!-- AdSense Placeholder -->
+  <!-- Replace below with your real AdSense code when approved -->
+  <!-- <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-XXXX"></script> -->
+</body>
+</html>
